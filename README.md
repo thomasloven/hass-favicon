@@ -1,6 +1,8 @@
 favicon
 =======
 
+[![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg)](https://github.com/custom-components/hacs)
+
 Change the favicon and app icons of your Home Assistant instance
 
 ![browser](https://user-images.githubusercontent.com/1299821/62975860-ad283a80-be1b-11e9-836a-d58a1732fb21.png)
@@ -41,7 +43,7 @@ You can add as few or as many of those you'd like. It's my understanding that th
 
 For reference, Home Assistant includes icons of sizes 192, 384, 512 and 1024 px square by default. Specifying even a single size will override all of those.
 
-![iphone](https://user-images.githubusercontent.com/1299821/62975899-c29d6480-be1b-11e9-9b6b-9d160ef8b439.jpg)
+![it IS charging thankyouverymuch](https://user-images.githubusercontent.com/1299821/62975899-c29d6480-be1b-11e9-9b6b-9d160ef8b439.jpg)
 
 ---
 <a href="https://www.buymeacoffee.com/uqD6KHCdJ" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/white_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
