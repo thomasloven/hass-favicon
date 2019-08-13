@@ -1,0 +1,8 @@
+{
+  "domain": "favicon",
+  "name": "Favicon changer",
+  "documentation": "",
+  "dependencies": ["frontend"],
+  "codeowners": [],
+  "requirements": []
+}
