@@ -3,7 +3,7 @@ favicon
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg)](https://github.com/custom-components/hacs)
 
-Change the favicon and app icons of your Home Assistant instance
+Change the gui page title, favicon and app icons of your Home Assistant instance
 
 ![browser](https://user-images.githubusercontent.com/1299821/62975860-ad283a80-be1b-11e9-836a-d58a1732fb21.png)
 
@@ -21,6 +21,7 @@ Change the favicon and app icons of your Home Assistant instance
 
 ```yaml
 favicon:
+  title: My Home
   favicon: /local/favicons/favicon.ico
   apple: /local/favicons/apple-touch-icon-180x180.png
   32: /local/favicons/favicon-32x32.png
@@ -32,6 +33,8 @@ favicon:
 - Make sure to clear the cache of your browser to get the new icons.
 
 # Options
+
+- `title` - The title to display at the top of the window or browser tab.
 
 - `favicon` - an .ico file which is displayed in your browser tab or bookmark menu.
 

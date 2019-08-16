@@ -11,6 +11,7 @@ async def async_setup(hass, config):
 
     favicon = config[DOMAIN].get('favicon')
     apple = config[DOMAIN].get('apple')
+    title = config[DOMAIN].get('title')
 
     if favicon or apple:
         get_template = homeassistant.components.frontend.IndexView.get_template
@@ -24,6 +25,8 @@ async def async_setup(hass, config):
                     text = text.replace("/static/icons/favicon.ico", favicon)
                 if apple:
                     text = text.replace("/static/icons/favicon-apple-180x180.png", apple)
+                if title:
+                    text = text.replace("<title>Home Assistant</title>", f"<title>{title}</title>")
                 return text
             tpl.render = new_render
             return tpl
