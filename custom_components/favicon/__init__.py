@@ -13,7 +13,7 @@ async def async_setup(hass, config):
     apple = config[DOMAIN].get('apple')
     title = config[DOMAIN].get('title')
 
-    if favicon or apple:
+    if favicon or apple or title:
         get_template = homeassistant.components.frontend.IndexView.get_template
 
         def new_get_template(self):
