@@ -1,4 +1,5 @@
 import logging
+from collections import defaultdict
 
 import homeassistant.components.frontend
 from homeassistant.components.frontend import _frontend_root
@@ -8,46 +9,56 @@ _LOGGER = logging.getLogger(__name__)
 DOMAIN = "favicon"
 
 async def async_setup(hass, config):
+    if not hass.data.get(DOMAIN):
+        hass.data[DOMAIN] = defaultdict(int)
 
-    favicon = config[DOMAIN].get('favicon')
-    apple = config[DOMAIN].get('apple')
-    title = config[DOMAIN].get('title')
+    if not hass.data[DOMAIN].get("get_template"):
+        hass.data[DOMAIN]["get_template"] = homeassistant.components.frontend.IndexView.get_template
 
-    if favicon or apple or title:
-        get_template = homeassistant.components.frontend.IndexView.get_template
+    conf = config.get(DOMAIN)
+    if not conf:
+        return True
+    hass.data[DOMAIN].update(conf)
+    return apply_hooks(hass)
 
-        def new_get_template(self):
-            tpl = get_template(self)
-            render = tpl.render
-            def new_render(*args, **kwargs):
-                text = render(*args, **kwargs)
-                if favicon:
-                    text = text.replace("/static/icons/favicon.ico", favicon)
-                if apple:
-                    text = text.replace("/static/icons/favicon-apple-180x180.png", apple)
-                if title:
-                    text = text.replace("<title>Home Assistant</title>", f"<title>{title}</title>")
-                return text
-            tpl.render = new_render
-            return tpl
+async def async_setup_entry(hass, config_entry):
+    config_entry.add_update_listener(_update_listener)
+    config_entry.options = config_entry.data
+    return await _update_listener(hass, config_entry)
 
-        homeassistant.components.frontend.IndexView.get_template = new_get_template
+async def async_remove_entry(hass, config_entry):
+    return remove_hooks(hass)
 
-    icons = []
-    for size in config[DOMAIN]:
-        if not isinstance(size, int):
-            continue
-        i = config[DOMAIN].get(size)
-        if i:
-            icons.append({
-                "src": i,
-                "sizes": f"{size}x{size}",
-                "type": "image/png",
-                })
+async def _update_listener(hass, config_entry):
+    conf = config_entry.options
+    hass.data[DOMAIN].update(conf)
+    return apply_hooks(hass)
 
-    if icons:
-        homeassistant.components.frontend.MANIFEST_JSON["icons"] = icons
 
+def apply_hooks(hass):
+    data = hass.data[DOMAIN]
+    def _get_template(self):
+        tpl = data["get_template"](self)
+        render = tpl.render
+
+        def new_render(*args, **kwargs):
+            text = render(*args, **kwargs)
+            if data["favicon"]:
+                text = text.replace("/static/icons/favicon.ico", data["favicon"])
+            if data["apple"]:
+                text = text.replace("/static/icons/favicon-apple-180x180.png", data["apple"])
+            if data["title"]:
+                text = text.replace("<title>Home Assistant</title>", f"<title>{data['title']}</title>")
+            return text
+
+        tpl.render = new_render
+        return tpl
+
+    homeassistant.components.frontend.IndexView.get_template = _get_template
     return True
 
+def remove_hooks(hass):
+    data = hass.data[DOMAIN]
+    homeassistant.components.frontend.IndexView.get_template = data["get_template"]
+    return True
 

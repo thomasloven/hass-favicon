@@ -1,0 +1,30 @@
+{
+  "config": {
+    "title": "Favicon",
+    "step": {
+      "config": {
+        "title": "Favicon changer",
+        "description": "Set the page title, favicon and/or iOS icons",
+        "data": {
+          "title": "Page title",
+          "favicon": "favicon URL",
+          "apple": "iOS icon URL"
+        }
+      }
+    },
+    "abort": {
+      "single_instance_allowed": "Only a single configuration of favicon is allowed."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "data": {
+          "title": "Page title",
+          "favicon": "favicon URL",
+          "apple": "iOS icon URL"
+        }
+      }
+    }
+  }
+}

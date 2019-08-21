@@ -4,5 +4,6 @@
   "documentation": "",
   "dependencies": ["frontend"],
   "codeowners": [],
-  "requirements": []
+  "requirements": [],
+  "config_flow": true
 }

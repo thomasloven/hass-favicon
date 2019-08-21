@@ -17,6 +17,22 @@ Change the gui page title, favicon and app icons of your Home Assistant instance
 
 - Put your icons in e.g. `<your config dir>/www/favicons/`
 
+## Method 1/2 Integration
+
+- Go to your Home Assistant configuration and to Integrations
+
+- Add a "Favicon" integration
+
+- Enter what you want the title of the Home Assistant interface page to be, and the URL of the icons you wish to change. E.g. `favicon URL: /local/favicons/favicon.ico`, `iOS icon URL: /local/favicons/180x180.png`.
+
+- Press submit
+
+- Refresh the page
+
+![integration](https://user-images.githubusercontent.com/1299821/63462280-d91a7000-c45a-11e9-97af-52f0335cad66.gif)
+
+## Method 2/2 YAML configuration
+
 - Add the following to your `configuration.yaml`:
 
 ```yaml
@@ -24,15 +40,13 @@ favicon:
   title: My Home
   favicon: /local/favicons/favicon.ico
   apple: /local/favicons/apple-touch-icon-180x180.png
-  32: /local/favicons/favicon-32x32.png
-  512: /local/favicons/android-chrome-512x512.png
 ```
 
 - Restart Home Assistant
 
 - Make sure to clear the cache of your browser to get the new icons.
 
-# Options
+### Options
 
 - `title` - The title to display at the top of the window or browser tab.
 
@@ -40,11 +54,6 @@ favicon:
 
 - `apple` - a 180 x 180 px image that will be displayed on your iDevice home screen if you save the link there
 
-- `<number>` - a `<number>` x `<number>` px image that will be displayed wherever it's needed for non-apple devices.
-
-You can add as few or as many of those you'd like. It's my understanding that the next smaller size will be used if one is requested which doesn't quite fit the need.
-
-For reference, Home Assistant includes icons of sizes 192, 384, 512 and 1024 px square by default. Specifying even a single size will override all of those.
 
 ![it IS charging thankyouverymuch](https://user-images.githubusercontent.com/1299821/62975899-c29d6480-be1b-11e9-9b6b-9d160ef8b439.jpg)
 
