@@ -21,7 +21,12 @@ class ExampleConfigFlow(config_entries.ConfigFlow):
                 {
                     vol.Optional('title'): str,
                     vol.Optional('favicon'): str,
-                    vol.Optional('apple'): str,
+                    vol.Optional('icon-apple'): str,
+                    vol.Optional('icon-1024'): str,
+                    vol.Optional('icon-512'): str,
+                    vol.Optional('icon-384'): str,
+                    vol.Optional('icon-192'): str,
+
                 }
             ),
         )
@@ -47,8 +52,17 @@ class ExampleEditFlow(config_entries.OptionsFlow):
                         default=self.config_entry.options.get("title", "")): str,
                     vol.Optional('favicon',
                         default=self.config_entry.options.get("favicon", "")): str,
-                    vol.Optional('apple',
-                        default=self.config_entry.options.get("apple", "")): str,
+                    vol.Optional('icon-apple',
+                        default=self.config_entry.options.get("icon-apple", "")): str,
+                    vol.Optional('icon-1024',
+                        default=self.config_entry.options.get("icon-1024", "")): str,
+                    vol.Optional('icon-512',
+                        default=self.config_entry.options.get("icon-512", "")): str,
+                    vol.Optional('icon-384',
+                        default=self.config_entry.options.get("icon-384", "")): str,
+                    vol.Optional('icon-192',
+                        default=self.config_entry.options.get("icon-192", "")): str,
+
                 }
             ),
         )

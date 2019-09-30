@@ -45,8 +45,8 @@ def apply_hooks(hass):
             text = render(*args, **kwargs)
             if data["favicon"]:
                 text = text.replace("/static/icons/favicon.ico", data["favicon"])
-            if data["apple"]:
-                text = text.replace("/static/icons/favicon-apple-180x180.png", data["apple"])
+            if data["icon-apple"]:
+                text = text.replace("/static/icons/favicon-apple-180x180.png", data["icon-apple"])
             if data["title"]:
                 text = text.replace("<title>Home Assistant</title>", f"<title>{data['title']}</title>")
             return text
@@ -54,6 +54,27 @@ def apply_hooks(hass):
         tpl.render = new_render
         return tpl
 
+    custom_manifest = dict(homeassistant.components.frontend.MANIFEST_JSON)
+
+    if data["title"]:
+        custom_manifest["name"] = data["title"];
+        custom_manifest["short_name"] = data["title"]
+
+    if data["icon-1024"] or data["icon-512"] or data["icon-384"] or data["icon-192"]:
+        custom_icons = []
+
+        if data["icon-1024"]:
+            custom_icons.append({ "sizes": "1024x1024", "src": data["icon-1024"], "type": "image/png" })
+        if data["icon-512"]:
+            custom_icons.append({ "sizes": "512x512", "src": data["icon-512"], "type": "image/png" })
+        if data["icon-384"]:
+             custom_icons.append({ "sizes": "384x384", "src": data["icon-384"], "type": "image/png" })
+        if data["icon-192"]:
+             custom_icons.append({ "sizes": "192x192", "src": data["icon-192"], "type": "image/png" })
+
+        custom_manifest["icons"] = custom_icons
+
+    homeassistant.components.frontend.MANIFEST_JSON = custom_manifest
     homeassistant.components.frontend.IndexView.get_template = _get_template
     return True
 

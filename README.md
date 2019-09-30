@@ -23,7 +23,7 @@ Change the gui page title, favicon and app icons of your Home Assistant instance
 
 - Add a "Favicon" integration
 
-- Enter what you want the title of the Home Assistant interface page to be, and the URL of the icons you wish to change. E.g. `favicon URL: /local/favicons/favicon.ico`, `iOS icon URL: /local/favicons/180x180.png`.
+- Enter what you want the title of the Home Assistant interface page to be, and the URL of the icons you wish to change. For the App icons there must be at least one specified. E.g. `favicon URL: /local/favicons/favicon.ico`, `iOS icon URL: /local/favicons/180x180.png`, `App icon 1024px URL: /local/favicons/1024x1024.png`.
 
 - Press submit
 
@@ -33,13 +33,17 @@ Change the gui page title, favicon and app icons of your Home Assistant instance
 
 ## Method 2/2 YAML configuration
 
-- Add the following to your `configuration.yaml`:
+- Add the following to your `configuration.yaml` (For the icons-* there must be at least one of them specified):
 
 ```yaml
 favicon:
   title: My Home
   favicon: /local/favicons/favicon.ico
-  apple: /local/favicons/apple-touch-icon-180x180.png
+  icon-apple: /local/favicons/apple-touch-icon-180x180.png
+  icon-1024: /local/favicons/icon-1024x1024.png
+  icon-512: /local/favicons/icon-512x512.png
+  icon-384: /local/favicons/icon-384x384.png
+  icon-192: /local/favicons/icon-192x192.png
 ```
 
 - Restart Home Assistant
@@ -52,7 +56,9 @@ favicon:
 
 - `favicon` - an .ico file which is displayed in your browser tab or bookmark menu.
 
-- `apple` - a 180 x 180 px image that will be displayed on your iDevice home screen if you save the link there
+- `icon-apple` - a 180 x 180 px image that will be displayed on your iDevice home screen if you save the link there
+
+- `icon-*` - The app launcher icons for desktop and android phones. You need to specify at least one resolution (`1024, 512, 384, 192`) to make it work. Higher or lower resolutions will be created from the nearest size from your browser. The icons have to be png's.
 
 
 ![it IS charging thankyouverymuch](https://user-images.githubusercontent.com/1299821/62975899-c29d6480-be1b-11e9-9b6b-9d160ef8b439.jpg)

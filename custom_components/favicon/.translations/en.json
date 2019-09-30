@@ -8,7 +8,11 @@
         "data": {
           "title": "Page title",
           "favicon": "favicon URL",
-          "apple": "iOS icon URL"
+          "icon-apple": "iOS icon URL",
+          "icon-1024": "App icon 1024px URL",
+          "icon-512": "App icon 512px URL",
+          "icon-384": "App icon 384px URL",
+          "icon-192": "App icon 192px URL"
         }
       }
     },
@@ -22,7 +26,11 @@
         "data": {
           "title": "Page title",
           "favicon": "favicon URL",
-          "apple": "iOS icon URL"
+          "icon-apple": "iOS icon URL",
+          "icon-1024": "App icon 1024px URL",
+          "icon-512": "App icon 512px URL",
+          "icon-384": "App icon 384px URL",
+          "icon-192": "App icon 192px URL"
         }
       }
     }
