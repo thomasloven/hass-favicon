@@ -1,7 +1,10 @@
+import logging
 import voluptuous as vol
 
 from homeassistant import config_entries
 from homeassistant.core import callback
+
+_LOGGER = logging.getLogger(__name__)
 
 @config_entries.HANDLERS.register("favicon")
 class ExampleConfigFlow(config_entries.ConfigFlow):
@@ -20,8 +23,7 @@ class ExampleConfigFlow(config_entries.ConfigFlow):
             data_schema=vol.Schema(
                 {
                     vol.Optional('title'): str,
-                    vol.Optional('favicon'): str,
-                    vol.Optional('apple'): str,
+                    vol.Optional('icon_path'): str,
                 }
             ),
         )
@@ -38,17 +40,17 @@ class ExampleEditFlow(config_entries.OptionsFlow):
 
     async def async_step_init(self, user_input=None):
         if user_input is not None:
+            _LOGGER.error(user_input)
             return self.async_create_entry(title="", data=user_input)
         return self.async_show_form(
             step_id='init',
             data_schema=vol.Schema(
                 {
                     vol.Optional('title',
+                        description="test",
                         default=self.config_entry.options.get("title", "")): str,
-                    vol.Optional('favicon',
-                        default=self.config_entry.options.get("favicon", "")): str,
-                    vol.Optional('apple',
-                        default=self.config_entry.options.get("apple", "")): str,
+                    vol.Optional('icon_path',
+                        default=self.config_entry.options.get("icon_path", "")): str,
                 }
             ),
         )

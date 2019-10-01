@@ -15,7 +15,15 @@ Change the gui page title, favicon and app icons of your Home Assistant instance
 
   There are some nice ones available [here](https://github.com/home-assistant/home-assistant-assets/tree/master/Alternates), and you can generate favicons from them using an online tool, such as [this one](https://realfavicongenerator.net/).
 
-- Put your icons in e.g. `<your config dir>/www/favicons/`
+- Put your icons in e.g. `<your config dir>/www/favicons/`. Note that `<your config dir>/www/` translates to `/local/` for the Icon path.
+Note: If you created `<your config dir>/www/` you need to restart Home Assistant once before any icons will be found.
+
+### About the icons
+`hass-favicon` will scan the specified directory and automatically apply icons when found based on their filename. There are three types of icons, and it's important that you get the filenames correct.
+
+- `favicon.ico` - The icon which is displayed on the browser tab and in the bookmark menu
+- `favicon-apple-<anything>.png` - The icon which is displayed if you save your interface to the home screen of your iDevice.
+- `favicon-<size>x<size>.png` - Used by android devices. `<size>` indicates the icon size in pixels, e.g. `favicon-1024x1024.png`.
 
 ## Method 1/2 Integration
 
@@ -23,13 +31,13 @@ Change the gui page title, favicon and app icons of your Home Assistant instance
 
 - Add a "Favicon" integration
 
-- Enter what you want the title of the Home Assistant interface page to be, and the URL of the icons you wish to change. E.g. `favicon URL: /local/favicons/favicon.ico`, `iOS icon URL: /local/favicons/180x180.png`.
+- Enter your wanted title and the path to your icons. E.g. `Icon path: /local/favicons/`
 
 - Press submit
 
-- Refresh the page
+- Refresh the page. Make sure to clear the cacke of your browser to get the new icons.
 
-![integration](https://user-images.githubusercontent.com/1299821/63462280-d91a7000-c45a-11e9-97af-52f0335cad66.gif)
+![integration](https://user-images.githubusercontent.com/1299821/65991117-1d068900-e48d-11e9-9002-f2253fafa190.gif)
 
 ## Method 2/2 YAML configuration
 
@@ -38,8 +46,7 @@ Change the gui page title, favicon and app icons of your Home Assistant instance
 ```yaml
 favicon:
   title: My Home
-  favicon: /local/favicons/favicon.ico
-  apple: /local/favicons/apple-touch-icon-180x180.png
+  icon_path: /local/favicons/
 ```
 
 - Restart Home Assistant
@@ -50,10 +57,7 @@ favicon:
 
 - `title` - The title to display at the top of the window or browser tab.
 
-- `favicon` - an .ico file which is displayed in your browser tab or bookmark menu.
-
-- `apple` - a 180 x 180 px image that will be displayed on your iDevice home screen if you save the link there
-
+- `icon_path:` - The path (frontend path) of the directory containing your icons.
 
 ![it IS charging thankyouverymuch](https://user-images.githubusercontent.com/1299821/62975899-c29d6480-be1b-11e9-9b6b-9d160ef8b439.jpg)
 

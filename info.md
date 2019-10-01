@@ -13,20 +13,22 @@ Change the favicon and app icons of your Home Assistant instance
 
   There are some nice ones available [here](https://github.com/home-assistant/home-assistant-assets/tree/master/Alternates), and you can generate favicons from them using an online tool, such as [this one](https://realfavicongenerator.net/).
 
-- Put your icons in e.g. `<your config dir>/www/favicons/`
+- Put your icons in e.g. `<your config dir>/www/favicons/`. Note that `<your config dir>/www/` translates to `/local/` for the Icon path.
 Note: If you created `<your config dir>/www/` you need to restart Home Assistant once before any icons will be found.
 
 - Go to your Home Assistant configuration and to Integrations
 
 - Add a "Favicon" integration
 
-- Enter what you want the title of the Home Assistant interface page to be, and the URL of the icons you wish to change. E.g. `favicon URL: /local/favicons/favicon.ico`, `iOS icon URL: /local/favicons/180x180.png`.
+- Enter your wanted title and the path to your icons. E.g. `Icon path: /local/favicons/`
 
 - Press submit
 
 - Refresh the page
 
-![integration](https://user-images.githubusercontent.com/1299821/63462280-d91a7000-c45a-11e9-97af-52f0335cad66.gif)
+See readme on github for more info about the icons.
+
+![integration](https://user-images.githubusercontent.com/1299821/65991117-1d068900-e48d-11e9-9002-f2253fafa190.gif)
 
 
 ![iphone](https://user-images.githubusercontent.com/1299821/62975899-c29d6480-be1b-11e9-9b6b-9d160ef8b439.jpg)
