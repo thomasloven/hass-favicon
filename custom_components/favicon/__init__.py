@@ -45,14 +45,11 @@ async def async_remove_entry(hass, config_entry):
 
 async def _update_listener(hass, config_entry):
     conf = config_entry.options
-    _LOGGER.error(conf)
     if CONFIG_ICON_PATH in hass.data[DOMAIN]:
         del hass.data[DOMAIN][CONFIG_ICON_PATH]
     if CONFIG_TITLE in hass.data[DOMAIN]:
         del hass.data[DOMAIN][CONFIG_TITLE]
-    _LOGGER.error(hass.data[DOMAIN])
     hass.data[DOMAIN].update(conf)
-    _LOGGER.error(hass.data[DOMAIN])
     return apply_hooks(hass)
 
 
