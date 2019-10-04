@@ -101,6 +101,19 @@ def apply_hooks(hass):
                 text = text.replace("/static/icons/favicon-apple-180x180.png", icons["apple"])
             if title:
                 text = text.replace("<title>Home Assistant</title>", f"<title>{title}</title>")
+                text = text.replace("<body>", f"""<body>
+                    <script type="module">
+                        customElements.whenDefined('ha-sidebar').then(() => {{
+                            const Sidebar = customElements.get('ha-sidebar');
+                            const firstUpdated = Sidebar.prototype.firstUpdated;
+                            Sidebar.prototype.firstUpdated = function(changedProps) {{
+                                firstUpdated.bind(this)(changedProps);
+                                this.shadowRoot.querySelector(".menu .title").innerHTML = "{title}";
+                            }}
+                        }});
+                    </script>
+                """)
+
             return text
 
         tpl.render = new_render
