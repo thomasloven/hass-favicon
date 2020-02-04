@@ -137,7 +137,7 @@ def apply_hooks(hass):
 def remove_hooks(hass):
     data = hass.data[DOMAIN]
     homeassistant.components.frontend.IndexView.get_template = data["get_template"]
-    homeassistant.components.frontend.MANIFSET_JSON["icons"] = data["manifest_icons"].copy()
+    homeassistant.components.frontend.MANIFEST_JSON["icons"] = data["manifest_icons"].copy()
     homeassistant.components.frontend.MANIFEST_JSON["name"] = "Home Assistant"
     homeassistant.components.frontend.MANIFEST_JSON["short_name"] = "Assistant"
     return True
