@@ -33,7 +33,7 @@ async def async_setup(hass, config):
     if CONFIG_TITLE in hass.data[DOMAIN]:
         del hass.data[DOMAIN][CONFIG_TITLE]
     hass.data[DOMAIN].update(conf)
-    return apply_hooks(hass)
+    return await apply_hooks(hass)
 
 async def async_setup_entry(hass, config_entry):
     config_entry.add_update_listener(_update_listener)
@@ -51,7 +51,7 @@ async def _update_listener(hass, config_entry):
     if CONFIG_TITLE in hass.data[DOMAIN]:
         del hass.data[DOMAIN][CONFIG_TITLE]
     hass.data[DOMAIN].update(conf)
-    return apply_hooks(hass)
+    return await apply_hooks(hass)
 
 
 def find_icons(hass, path):
@@ -88,9 +88,9 @@ def find_icons(hass, path):
         icons["manifest"] = manifest
     return icons
 
-def apply_hooks(hass):
+async def apply_hooks(hass):
     data = hass.data.get(DOMAIN, {})
-    icons = find_icons(hass, data.get(CONFIG_ICON_PATH, None))
+    icons = await hass.loop.run_in_executor(None, find_icons, hass, data.get(CONFIG_ICON_PATH, None))
     title = data.get(CONFIG_TITLE, None)
 
     def _get_template(self):
