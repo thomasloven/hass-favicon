@@ -37,7 +37,8 @@ async def async_setup(hass, config):
 
 async def async_setup_entry(hass, config_entry):
     config_entry.add_update_listener(_update_listener)
-    config_entry.options = config_entry.data
+    if not config_entry.options:
+        config_entry.options = config_entry.data
     return await _update_listener(hass, config_entry)
 
 async def async_remove_entry(hass, config_entry):
@@ -63,22 +64,25 @@ def find_icons(hass, path):
     localpath = "www" + path[len("/local"):]
     localpath = hass.config.path(localpath)
     _LOGGER.info("Looking for icons in: %s", localpath)
-    for fn in os.listdir(localpath):
-        if fn == "favicon.ico":
-            icons["favicon"] = os.path.join(path, fn)
-            _LOGGER.info("Found favicon: %s", os.path.join(path, fn))
-        apple = re.search(RE_APPLE, fn)
-        if apple:
-            icons["apple"] = os.path.join(path, fn)
-            _LOGGER.info("Found apple icon: %s", os.path.join(path, fn))
-        icon = re.search(RE_ICON, fn)
-        if icon:
-            manifest.append({
-                "src": os.path.join(path, fn),
-                "sizes": icon.group(1),
-                "type": "image/png",
-                })
-            _LOGGER.info("Found icon: %s", os.path.join(path, fn))
+    try:
+        for fn in os.listdir(localpath):
+            if fn == "favicon.ico":
+                icons["favicon"] = os.path.join(path, fn)
+                _LOGGER.info("Found favicon: %s", os.path.join(path, fn))
+            apple = re.search(RE_APPLE, fn)
+            if apple:
+                icons["apple"] = os.path.join(path, fn)
+                _LOGGER.info("Found apple icon: %s", os.path.join(path, fn))
+            icon = re.search(RE_ICON, fn)
+            if icon:
+                manifest.append({
+                    "src": os.path.join(path, fn),
+                    "sizes": icon.group(1),
+                    "type": "image/png",
+                    })
+                _LOGGER.info("Found icon: %s", os.path.join(path, fn))
+    except:
+        pass
 
     if manifest:
         icons["manifest"] = manifest
@@ -111,6 +115,12 @@ def apply_hooks(hass):
                                 this.shadowRoot.querySelector(".menu .title").innerHTML = "{title}";
                             }}
                         }});
+
+                        window.setInterval(() => {{
+                            if(!document.title.endsWith("- {title}") && document.title !== "{title}") {{
+                                document.title = document.title.replace(/Home Assistant/, "{title}");
+                            }}
+                        }}, 1000);
                     </script>
                 """)
 
