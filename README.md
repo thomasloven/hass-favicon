@@ -13,7 +13,7 @@ Change the gui page title, favicon and app icons of your Home Assistant instance
 
 - Get some icons
 
-  There are some nice ones available [here](https://github.com/home-assistant/home-assistant-assets/tree/master/Alternates), and you can generate favicons from them using an online tool, such as [this one](https://realfavicongenerator.net/).
+  There are some nice ones available [here](https://github.com/home-assistant/iOS/tree/master/icons/Alternates), and you can generate favicons from them using an online tool, such as [this one](https://realfavicongenerator.net/).
 
 - Put your icons in e.g. `<your config dir>/www/favicons/`. Note that `<your config dir>/www/` translates to `/local/` for the Icon path.
 Note: If you created `<your config dir>/www/` you need to restart Home Assistant once before any icons will be found.
