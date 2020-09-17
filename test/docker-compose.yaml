@@ -1,0 +1,39 @@
+x-files: &x-files
+  - ../custom_components:/config/custom_components
+  - ./configuration.yaml:/config/configuration.yaml
+  - ./www:/config/www
+
+x-command: &x-command |
+  bash -c '
+  mkdir /config/www/
+  curl https://raw.githubusercontent.com/thomasloven/lovelace-card-mod/master/card-mod.js --output /config/www/card-mod.js &&
+  hass --script ensure_config -c /config &&
+  hass --script auth -c /config add dev dev &&
+  echo "
+    {
+      \"data\": {
+        \"done\": [
+          \"user\",
+          \"core_config\",
+          \"integration\"
+        ]
+      },
+      \"key\": \"onboarding\",
+      \"version\": 3
+    }
+    " > /config/.storage/onboarding &&
+  hass -v -c /config'
+
+version: '3.5'
+services:
+
+  prod: &base_service
+    image: homeassistant/home-assistant:latest
+    volumes: *x-files
+    ports:
+      - "5001:8123"
+    command: *x-command
+
+  dev:
+    <<: *base_service
+    image: homeassistant/home-assistant:dev
