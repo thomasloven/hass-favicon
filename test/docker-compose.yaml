@@ -12,5 +12,6 @@ services:
       - ./configuration.yaml:/config/configuration.yaml:ro
       - .:/config/test:ro
       - ..:/config/www/workspace
+      - ../custom_components:/config/custom_components
     ports:
       - 8125:8123
