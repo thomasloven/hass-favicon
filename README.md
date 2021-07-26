@@ -35,7 +35,7 @@ Note: If you created `<your config dir>/www/` you need to restart Home Assistant
 
 - Press submit
 
-- Refresh the page. Make sure to clear the cacke of your browser to get the new icons.
+- Refresh the page. Make sure to clear the cache of your browser to get the new icons.
 
 ![integration](https://user-images.githubusercontent.com/1299821/65991117-1d068900-e48d-11e9-9002-f2253fafa190.gif)
 
