@@ -15,6 +15,7 @@ RE_ICON = r"^favicon-(\d+x\d+)\..+"
 
 CONFIG_TITLE = "title"
 CONFIG_ICON_PATH = "icon_path"
+CONFIG_LAUNCH_ICON_COLOR = "launch_icon_color"
 
 
 async def async_setup(hass, config):
@@ -103,6 +104,7 @@ async def apply_hooks(hass):
         data.get(CONFIG_ICON_PATH, None)
         )
     title = data.get(CONFIG_TITLE, None)
+    launch_icon_color = data.get(CONFIG_LAUNCH_ICON_COLOR, None)
 
     def _get_template(self):
         tpl = data["get_template"](self)
@@ -146,6 +148,11 @@ async def apply_hooks(hass):
                             }}, 1000);
                         </script>
                     """  # noqa: E501
+                )
+            if launch_icon_color:
+                text = text.replace(
+                    '<rect fill="#41bdf5" ',
+                    f'<rect fill="{launch_icon_color}" '
                 )
 
             return text
