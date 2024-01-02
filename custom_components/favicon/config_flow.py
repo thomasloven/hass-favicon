@@ -25,6 +25,7 @@ class ConfigFlow(config_entries.ConfigFlow):
                 {
                     vol.Optional('title'): str,
                     vol.Optional('icon_path'): str,
+                    vol.Optional('launch_icon_color'): str,
                 }
             ),
         )
@@ -60,6 +61,13 @@ class EditFlow(config_entries.OptionsFlow):
                         description={
                             "suggested_value":
                                 self.config_entry.options.get("icon_path", ""),
+                        }
+                    ): str,
+                    vol.Optional(
+                        'launch_icon_color',
+                        description={
+                            "suggested_value":
+                                self.config_entry.options.get("launch_icon_color", ""),
                         }
                     ): str,
                 }

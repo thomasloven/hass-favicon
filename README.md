@@ -31,7 +31,7 @@ Note: If you created `<your config dir>/www/` you need to restart Home Assistant
 
 - Add a "Favicon" integration
 
-- Enter your wanted title and the path to your icons. E.g. `Icon path: /local/favicons/`
+- Enter your wanted title, the path to your icons (e.g. `/local/favicons/`), and launch icon color (e.g. `#BADA55`)
 
 - Press submit
 
@@ -47,6 +47,7 @@ Note: If you created `<your config dir>/www/` you need to restart Home Assistant
 favicon:
   title: My Home
   icon_path: /local/favicons/
+  launch_icon_color: "#BADA55"
 ```
 
 - Restart Home Assistant
@@ -58,6 +59,8 @@ favicon:
 - `title` - The title to display at the top of the window or browser tab.
 
 - `icon_path:` - The path (frontend path) of the directory containing your icons.
+
+- `launch_icon_color:` - Launch icon color (e.g. `#BADA55`).
 
 ![it IS charging thankyouverymuch](https://user-images.githubusercontent.com/1299821/62975899-c29d6480-be1b-11e9-9b6b-9d160ef8b439.jpg)
 
