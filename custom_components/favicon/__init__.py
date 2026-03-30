@@ -15,6 +15,8 @@ RE_ICON = r"^favicon-(\d+x\d+)\..+"
 
 CONFIG_TITLE = "title"
 CONFIG_ICON_PATH = "icon_path"
+CONFIG_LAUNCH_ICON_COLOR = "launch_icon_color"
+CONFIG_KEYS = [CONFIG_TITLE, CONFIG_ICON_PATH, CONFIG_LAUNCH_ICON_COLOR]
 
 
 async def async_setup(hass, config):
@@ -30,10 +32,9 @@ async def async_setup(hass, config):
     conf = config.get(DOMAIN)
     if not conf:
         return True
-    if CONFIG_ICON_PATH in hass.data[DOMAIN]:
-        del hass.data[DOMAIN][CONFIG_ICON_PATH]
-    if CONFIG_TITLE in hass.data[DOMAIN]:
-        del hass.data[DOMAIN][CONFIG_TITLE]
+    for key in CONFIG_KEYS:
+        if key in hass.data[DOMAIN]:
+            del hass.data[DOMAIN][key]
     hass.data[DOMAIN].update(conf)
     return await apply_hooks(hass)
 
@@ -51,10 +52,9 @@ async def async_remove_entry(hass, config_entry):
 
 async def _update_listener(hass, config_entry):
     conf = config_entry.options
-    if CONFIG_ICON_PATH in hass.data[DOMAIN]:
-        del hass.data[DOMAIN][CONFIG_ICON_PATH]
-    if CONFIG_TITLE in hass.data[DOMAIN]:
-        del hass.data[DOMAIN][CONFIG_TITLE]
+    for key in CONFIG_KEYS:
+        if key in hass.data[DOMAIN]:
+            del hass.data[DOMAIN][key]
     hass.data[DOMAIN].update(conf)
     return await apply_hooks(hass)
 
@@ -103,6 +103,7 @@ async def apply_hooks(hass):
         data.get(CONFIG_ICON_PATH, None)
         )
     title = data.get(CONFIG_TITLE, None)
+    launch_icon_color = data.get(CONFIG_LAUNCH_ICON_COLOR, None)
 
     def _get_template(self):
         tpl = data["get_template"](self)
@@ -146,6 +147,15 @@ async def apply_hooks(hass):
                             }}, 1000);
                         </script>
                     """  # noqa: E501
+                )
+            if launch_icon_color:
+                text = text.replace(
+                    '<link rel="mask-icon" href="/static/icons/mask-icon.svg" color="#18bcf2">',
+                    f'<link rel="mask-icon" href="/static/icons/mask-icon.svg" color="{launch_icon_color}">'
+                )
+                text = text.replace(
+                    '<path fill="#18BCF2" ',
+                    f'<path fill="{launch_icon_color}" '
                 )
 
             return text

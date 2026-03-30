@@ -4,10 +4,11 @@
     "step": {
       "config": {
         "title": "Favicon changer",
-        "description": "Set the page title, and path to icons.",
+        "description": "Set the page title, path to icons, and launch icon color.",
         "data": {
           "title": "Page title",
-          "icon_path": "Icon path"
+          "icon_path": "Icon path",
+          "launch_icon_color": "Launch icon color"
         }
       }
     },
@@ -20,7 +21,8 @@
       "init": {
         "data": {
           "title": "Page title",
-          "icon_path": "Icon path"
+          "icon_path": "Icon path",
+          "launch_icon_color": "Launch icon color"
         }
       }
     }
