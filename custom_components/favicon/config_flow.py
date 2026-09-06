@@ -6,9 +6,12 @@ from homeassistant.core import callback
 
 _LOGGER = logging.getLogger(__name__)
 
+DOMAIN = "favicon"
 
-@config_entries.HANDLERS.register("favicon")
-class ConfigFlow(config_entries.ConfigFlow):
+
+class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
+    VERSION = 1
+
     async def async_step_user(self, user_input=None):
         if self._async_current_entries():
             return self.async_abort(reason="single_instance_allowed")
@@ -16,8 +19,7 @@ class ConfigFlow(config_entries.ConfigFlow):
 
     async def async_step_config(self, user_input=None):
         if user_input is not None:
-            return self.async_create_entry(
-                    title="", data=user_input)
+            return self.async_create_entry(title="Favicon", data=user_input)
 
         return self.async_show_form(
             step_id='config',
@@ -32,18 +34,19 @@ class ConfigFlow(config_entries.ConfigFlow):
     @staticmethod
     @callback
     def async_get_options_flow(config_entry):
-        return EditFlow(config_entry)
+        return EditFlow()
 
 
 class EditFlow(config_entries.OptionsFlow):
-
-    def __init__(self, config_entry):
-        self.config_entry = config_entry
+    # Do not define __init__ and do not assign self.config_entry - since
+    # HA 2025.12 OptionsFlow.config_entry is a read-only property that HA
+    # populates for us.
 
     async def async_step_init(self, user_input=None):
         if user_input is not None:
-            _LOGGER.error(user_input)
-            return self.async_create_entry(title="", data=user_input)
+            return self.async_create_entry(data=user_input)
+
+        current = {**self.config_entry.data, **self.config_entry.options}
         return self.async_show_form(
             step_id='init',
             data_schema=vol.Schema(
@@ -51,15 +54,13 @@ class EditFlow(config_entries.OptionsFlow):
                     vol.Optional(
                         'title',
                         description={
-                            "suggested_value":
-                                self.config_entry.options.get("title", ""),
+                            "suggested_value": current.get("title", ""),
                         }
                     ): str,
                     vol.Optional(
                         'icon_path',
                         description={
-                            "suggested_value":
-                                self.config_entry.options.get("icon_path", ""),
+                            "suggested_value": current.get("icon_path", ""),
                         }
                     ): str,
                 }
